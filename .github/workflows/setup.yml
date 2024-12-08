@@ -21,3 +21,4 @@ jobs:
         run: |
           sudo apt-get install -y openjdk-11-jdk maven
           echo "Dependencies installed successfully!"
+          
