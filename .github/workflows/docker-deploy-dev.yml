@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Docker Deployment Dev
 on:
   workflow_run:
     workflows: ["Build and Test"]
@@ -7,6 +7,8 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    if: ${{ vars.ENV == 'dev' }}
+    environment: dev
     steps:
 
       - name: Check previous workflow status
@@ -29,17 +31,17 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/boardgame:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/boardgame-dev:latest .
 
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/boardgame:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/boardgame-dev:latest
 
       # Step 3: Scan Docker image with Trivy Action
       - name: Trivy Scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/boardgame:latest
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/boardgame-dev:latest
           format: 'template'
           template: "@$HOME/.local/bin/trivy-bin/contrib/html.tpl"
           output: 'trivy-image-report.html'
