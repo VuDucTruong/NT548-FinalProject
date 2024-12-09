@@ -4,6 +4,7 @@ on:
 jobs:
   monitoring:
     runs-on: ubuntu-latest
+    environment: prod
     steps:
       - name: Set up Azure CLI
         uses: azure/login@v2

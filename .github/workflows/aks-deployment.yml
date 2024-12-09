@@ -7,6 +7,7 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-latest
+    environment: prod
     if: ${{ vars.ENV == 'prod' }}
     steps:
       - name: Check previous workflow status
