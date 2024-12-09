@@ -5,9 +5,6 @@ jobs:
   monitoring:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
       - name: Set up Azure CLI
         uses: azure/login@v2
         with:
